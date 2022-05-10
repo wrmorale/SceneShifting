@@ -41,14 +41,15 @@ class Overworld extends Phaser.Scene {
         // Set up animations
         this.createAnimations();
 
-        // set world boundaries
-        this.physics.world.setBounds(this.ROOMWIDTH, this.ROOMHEIGHT, this.ROOMWIDTH, this.ROOMHEIGHT);
-
         // make player avatar 🧍
         this.player = this.physics.add.sprite(this.ROOMWIDTH*1.5, this.ROOMHEIGHT*1.5, 'link_atlas', 'idle_down_0001').setScale(this.AVATAR_SCALE);
         this.player.body.allowGravity = false;
         this.player.body.setCollideWorldBounds(true);
-        this.player.body.onWorldBounds = true;
+        this.player.body.onWorldBounds = true;    
+
+        // set world boundaries
+        this.physics.world.setBounds(this.ROOMWIDTH-this.player.displayWidth/2, this.ROOMHEIGHT-this.player.displayHeight/2, 
+            this.ROOMWIDTH+this.player.displayWidth, this.ROOMHEIGHT+this.player.displayHeight/2);
 
         this.physics.world.on('worldbounds', (body, blockedUp, blockedDown, blockedLeft, blockedRight) => {
             if (blockedUp) {
@@ -58,8 +59,8 @@ class Overworld extends Phaser.Scene {
                     3000,
                     'Linear'
                 );
-                this.physics.world.setBounds(this.ROOMWIDTH, 0, this.ROOMWIDTH, this.ROOMHEIGHT);
-                this.player.body.reset(this.player.body.x+this.player.body.halfWidth, this.player.body.y - 1);
+                this.physics.world.setBounds(this.ROOMWIDTH-this.player.displayWidth/2, 0, 
+                    this.ROOMWIDTH+this.player.displayWidth, this.ROOMHEIGHT+this.player.displayHeight/2);
             }
         });
 
