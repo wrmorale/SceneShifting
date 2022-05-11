@@ -64,6 +64,18 @@ class Overworld extends Phaser.Scene {
                 this.physics.world.setBounds(this.ROOMWIDTH-this.player.displayWidth/2, 0, 
                     this.ROOMWIDTH+this.player.displayWidth, this.ROOMHEIGHT+this.player.displayHeight/2);
             }
+            if(blockedDown){
+                this.cameras.main.flash(250);
+                this.cameras.main.shake(250);
+                this.cameras.main.pan(
+                    this.ROOMWIDTH*1.5,
+                    this.ROOMHEIGHT*1.5,
+                    3000,
+                    'Cubic.easeOut'
+                );
+                this.physics.world.setBounds(this.ROOMWIDTH-this.player.displayWidth/2, 0, 
+                    this.ROOMWIDTH+this.player.displayWidth, this.ROOMHEIGHT+this.player.displayHeight/2);
+            }
         });
 
         // Use Phaser-provided cursor key creation function
